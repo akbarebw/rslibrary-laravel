@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
-            $table->enum('status', ['sedang dipinjam', 'sudah dikembalikan', 'terlambat']); 
+            $table->enum('status', ['dipinjam', 'selesai']); 
             $table->string('code');
             $table->softDeletes();
             $table->timestamps();

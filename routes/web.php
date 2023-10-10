@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BukuController;
@@ -46,7 +47,13 @@ Route::get('/dashboard/peminjaman/{id}', [DashboardPeminjamanController::class, 
 
 Route::get('/dashboard/account', [DashboardSettingsController::class, 'index'])->name('dashboard-account');
 
+// Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
 
 
+Route::prefix('admin')
+    ->namespace('Admin')
+    ->group(function() {
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    });
 
 require __DIR__.'/auth.php';
