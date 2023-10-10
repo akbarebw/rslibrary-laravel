@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardBukuController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPeminjamanController;
+use App\Http\Controllers\DashboardSettingsController;
+use App\Http\Controllers\DetailController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +24,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/buku', [BukuController::class, 'index'])->name('buku');
+Route::get('/details/{id}', [DetailController::class, 'index'])->name('detail');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/success', [CartController::class, 'success'])->name('success');
+Route::get('/register/success', [RegisteredUserController::class, 'success'])->name('register-success');
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/dashboard/buku', [DashboardBukuController::class, 'index'])->name('dashboard-buku');
+Route::get('/dashboard/buku/add', [DashboardBukuController::class, 'create'])->name('dashboard-buku-create');
+Route::get('/dashboard/buku/{id}', [DashboardBukuController::class, 'detail'])->name('dashboard-buku-detail');
+
+Route::get('/dashboard/peminjaman', [DashboardPeminjamanController::class, 'index'])->name('dashboard-peminjaman');
+Route::get('/dashboard/peminjaman/{id}', [DashboardPeminjamanController::class, 'detail'])->name('dashboard-peminjaman-detail');
+
+Route::get('/dashboard/account', [DashboardSettingsController::class, 'index'])->name('dashboard-account');
+
+
+
+
+require __DIR__.'/auth.php';

@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('nama');
             $table->string('password');
-            $table->rememberToken();
+            $table->string('nomor_telp');
+            $table->string('email')->unique();
+            $table->text('alamat');
+            $table->date('tgl_lahir');
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->unsignedInteger('regencies_id');
+            $table->unsignedInteger('provinces_id');
+            $table->string('country');
+            $table->enum('role', ['admin', 'petugas', 'user'])->default('user');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
