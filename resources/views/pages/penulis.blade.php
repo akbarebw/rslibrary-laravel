@@ -1,74 +1,19 @@
 @extends('layouts.app')
 
 @section('title')
-perpustakaan buku page
+perpustakaan penulis page
 @endsection
 
 @section('content')
 <div class="page-content page-home">
 
-    <!-- start list categories -->
-    <section class="perpus-list-categories">
-        <div class="container">
-            <div class="row">
-                <div class="col-12" data-aos="fade-up">
-                    <h5>Semua Kategori</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/fiksi_kategori.svg" alt="" class="w-100">
-                        </div>
-                        <p class="categories-text">Fiksi</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/ilmiah_kategori.svg" alt="" class="w-100">
-                        </div>
-                        <p class="categories-text">Ilmiah</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/non_fiksi_kategori.svg" alt=""
-                                class="w-100"></div>
-                        <p class="categories-text">Non Fiksi</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="400">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/kesehatan_kategori.svg" alt=""
-                                class="w-100"></div>
-                        <p class="categories-text">Kesehatan</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="500">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/seni_kategori.svg" alt="" class="w-100">
-                        </div>
-                        <p class="categories-text">Seni</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="600">
-                    <a href="#" class="component-categories d-block">
-                        <div class="categories-image"><img src="images/icon/makanan_kategori.svg" alt="" class="w-100">
-                        </div>
-                        <p class="categories-text">Kuliner</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- end list categories -->
 
     <!-- start list product -->
     <section class="perpus-new-product">
         <div class="container">
             <div class="row">
                 <div class="col-12" data-aos="fade-up">
-                    <h5>Semua Buku</h5>
+                    <h5>Semua penulis</h5>
                 </div>
             </div>
             <div class="row">

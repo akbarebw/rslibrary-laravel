@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PenerbitController as AdminPenerbitController;
+use App\Http\Controllers\Admin\PenulisController as AdminPenulisController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BukuController;
@@ -11,6 +14,8 @@ use App\Http\Controllers\DashboardPeminjamanController;
 use App\Http\Controllers\DashboardSettingsController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PenerbitController;
+use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +33,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/buku', [BukuController::class, 'index'])->name('buku');
+Route::get('/penulis', [PenulisController::class, 'index'])->name('penulis');
+Route::get('/penerbit', [PenerbitController::class, 'index'])->name('penerbit');
 Route::get('/details/{id}', [DetailController::class, 'index'])->name('detail');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/success', [CartController::class, 'success'])->name('success');
@@ -51,9 +58,12 @@ Route::get('/dashboard/account', [DashboardSettingsController::class, 'index'])-
 
 
 Route::prefix('admin')
-    ->namespace('Admin')
     ->group(function() {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+        Route::resource('category', CategoryController::class);
+        Route::resource('penulis', AdminPenulisController::class);
+        Route::resource('penerbit', AdminPenerbitController::class);
+
     });
 
 require __DIR__.'/auth.php';

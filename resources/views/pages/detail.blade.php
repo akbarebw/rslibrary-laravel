@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <h1>Belajar dasar Machine learning dengan python</h1>
-                            <div class="author">Halland paland</div>
+                            <div class="author"><a href="{{ route('penulis') }}">haaland</a></div>
 
                         </div>
                         <div class="col-lg-2" data-aos="zoom-in">
@@ -77,7 +77,7 @@
                                     <tr>
                                         <th scope="row">2</th>
                                         <td>PENERBIT</td>
-                                        <td>Signet</td>
+                                        <td><a href="{{ route('penerbit') }}">Gramedia</a></td>
                                         
                                     </tr>
                                     <tr>
