@@ -63,30 +63,3 @@ Admin Add Penulis
 </div>
 </div>
 @endsection
-
-@push('addon-script')
-<script>
-    // AJAX DataTable
-        var datatable = $('#crudTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ordering: true,
-            ajax: {
-                url: '{!! url()->current() !!}',
-            },
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'nama_penulis', name: 'nama_penulis' },
-                { data: 'foto', name: 'foto' },
-                { data: 'slug', name: 'slug' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    width: '15%'
-                },
-            ]
-        });
-</script>
-@endpush

@@ -4,21 +4,20 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PenulisRequest;
-use App\Models\Penulis;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\Datatables\Datatables;
-
-class PenulisController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $query = Penulis::query();
+         if (request()->ajax()) {
+            $query = User::query();
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
@@ -33,10 +32,10 @@ class PenulisController extends Controller
                                         Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                                    <a class="dropdown-item" href="' . route('penulis.edit', $item->id) . '">
+                                    <a class="dropdown-item" href="' . route('user.edit', $item->id) . '">
                                         Sunting
                                     </a>
-                                    <form action="' . route('penulis.destroy', $item->id) . '" method="POST">
+                                    <form action="' . route('user.destroy', $item->id) . '" method="POST">
                                         ' . method_field('delete') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger">
                                             Hapus
@@ -46,13 +45,11 @@ class PenulisController extends Controller
                             </div>
                     </div>';
                 })
-                ->editColumn('foto', function ($item) {
-                    return $item->foto ? '<img src="' . Storage::url($item->foto) . '" style="max-height: 40px;"/>' : '';
-                })
-                ->rawColumns(['action', 'foto'])
+                ->rawColumns(['action'])
                 ->make();
         }
-        return view ('pages.admin.penulis.index');
+
+        return view('pages.admin.user.index');
     }
 
     /**
@@ -60,22 +57,21 @@ class PenulisController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.penulis.create');
+        return view('pages.admin.user.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PenulisRequest $request)
+    public function store(UserRequest $request)
     {
         $data = $request->all();
 
-        $data['slug'] = Str::slug($request->nama_penulis);
-        $data['foto'] = $request->file('foto')->store('assets/penulis', 'public');
-      
-        Penulis::create($data);
+        $data['password'] = bcrypt($request->password);
 
-        return redirect()->route('penulis.index');
+        User::create($data);
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -91,9 +87,9 @@ class PenulisController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Penulis::findOrFail($id);
+        $item = User::findOrFail($id);
 
-        return view('pages.admin.penulis.edit',[
+        return view('pages.admin.user.edit',[
             'item' => $item
         ]);
     }
@@ -103,23 +99,22 @@ class PenulisController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $item = Penulis::findOrFail($id);
         $data = $request->all();
 
-        $data['slug'] = Str::slug($request->nama_penulis);
+        $item = User::findOrFail($id);
 
-        if ($request->hasFile('foto')) {
-            if ($item->foto) {
-                Storage::disk('public')->delete($item->foto);
-            }
-            $data['foto'] = $request->file('foto')->store('assets/penulis', 'public');
-        } else {
-            $data['foto'] = $item->foto;
+        if($request->password)
+        {
+            $data['password'] =  bcrypt($request->password);
+        }
+        else 
+        {
+            unset($data['password']);
         }
 
         $item->update($data);
 
-        return redirect()->route('penulis.index');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -127,9 +122,10 @@ class PenulisController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = Penulis::findorFail($id);
+        $item = User::findorFail($id);
         $item->delete();
 
-        return redirect()->route('penulis.index');
+        return redirect()->route('user.index');
+
     }
 }

@@ -26,17 +26,21 @@
                 </div>
                 <div class="list-group list-group-flush">
                     <a href="{{{ route('admin-dashboard') }}}"
-                        class="list-group-item list-group-item-action">Dashboard</a>
-                    <a href="#" class="list-group-item list-group-item-action">Buku</a>
-                    <a href="/dashboard-settings.html" class="list-group-item list-group-item-action">User</a>
+                        class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }}">Dashboard</a>
+                    <a href="#"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/buku*') ? 'active' : '' }}">Buku</a>
+                    <a href="{{ route('user.index') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }}">User</a>
                     <a href="{{ route('penulis.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/penulis*') ? 'active' : '' }}">Penulis</a>
                     <a href="{{ route('penerbit.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/penerbit*') ? 'active' : '' }}">Penerbit</a>
                     <a href="{{ route('category.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/category*') ? 'active' : '' }}">Kategori</a>
-                    <a href="/dashboard-settings.html" class="list-group-item list-group-item-action">Peminjaman</a>
-                    <a href="/dashboard-account.html" class="list-group-item list-group-item-action">My Account</a>
+                    <a href="/dashboard-settings.html"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">Peminjaman</a>
+                    <a href="/dashboard-account.html" class="list-group-item list-group-item-action" {{
+                        request()->is('admin/penulis*') ? 'active' : '' }}>My Account</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

@@ -12,7 +12,7 @@ Admin Edit Penerbit
         <div class="dashboard-heading">
             <h2 class="dashboard-title">Penerbit</h2>
             <p class="dashboard-subtitle">
-                Edit penerbit
+                Edit "{{ $item->nama_penerbit }}" Penerbit
             </p>
         </div>
         <div class="dashboard-content">
@@ -66,30 +66,3 @@ Admin Edit Penerbit
 </div>
 </div>
 @endsection
-
-@push('addon-script')
-<script>
-    // AJAX DataTable
-        var datatable = $('#crudTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ordering: true,
-            ajax: {
-                url: '{!! url()->current() !!}',
-            },
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'nama_penerbit', name: 'nama_penerbit' },
-                { data: 'foto', name: 'foto' },
-                { data: 'slug', name: 'slug' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    width: '15%'
-                },
-            ]
-        });
-</script>
-@endpush

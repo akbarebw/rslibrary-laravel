@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('bahasa');
             $table->integer('halaman');
             $table->text('deskripsi');
-            $table->binary('pdf');
+            $table->string('pdf');
             $table->softDeletes();
             $table->timestamps();
         });

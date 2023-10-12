@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PenerbitRequest;
 use App\Models\Penerbit;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -64,7 +65,7 @@ class PenerbitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PenerbitRequest $request)
     {
         $data = $request->all();
 

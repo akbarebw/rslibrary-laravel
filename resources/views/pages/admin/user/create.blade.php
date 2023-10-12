@@ -2,7 +2,7 @@
 
 
 @section('title')
-Admin Edit Category
+Admin Add User
 @endsection
 
 
@@ -10,9 +10,9 @@ Admin Edit Category
 <div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
         <div class="dashboard-heading">
-            <h2 class="dashboard-title">Category</h2>
+            <h2 class="dashboard-title">User</h2>
             <p class="dashboard-subtitle">
-                Edit "{{ $item->nama }}" category
+                Create new User
             </p>
         </div>
         <div class="dashboard-content">
@@ -27,25 +27,37 @@ Admin Edit Category
                         </ul>
                     </div>
                     @endif
-                    <form action="{{ route('category.update', $item->id) }}" method="post"
-                        enctype="multipart/form-data">
-                        @method('PUT')
+                    <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama" required
-                                                value="{{ $item->nama }}" />
+                                            <label>Nama User</label>
+                                            <input type="text" class="form-control" name="nama" required />
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Foto</label>
-
-                                            <input type="file" class="form-control" name="foto" placeholder="foto" />
+                                            <label>Email User</label>
+                                            <input type="text" class="form-control" name="email" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password User</label>
+                                            <input type="password" class="form-control" name="password" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Roles</label>
+                                            <select name="role" required class="form-control">
+                                                <option value="admin">Admin</option>
+                                                <option value="petugas">Petugas</option>
+                                                <option value="user">User</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -63,6 +75,5 @@ Admin Edit Category
         </div>
     </div>
 </div>
-</div>
-</div>
+
 @endsection
