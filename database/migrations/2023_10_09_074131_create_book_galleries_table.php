@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('book_galleries', function (Blueprint $table) {
             $table->id();
-            $table->binary('foto');
+            $table->string('foto');
             $table->Integer('books_id');
             $table->timestamps();
         });
