@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transactions_id');
-            $table->unsignedBigInteger('books_id');
+            $table->Integer('transactions_id');
+            $table->Integer('books_id');
             $table->string('code');
             $table->timestamps();
         });

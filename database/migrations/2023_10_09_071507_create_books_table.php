@@ -12,16 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->string('ISBN')->primary();
+            $table->id();
+            $table->Integer('isbn')->unique();
             $table->string('judul');
-            $table->unsignedInteger('penulis_id');
-            $table->unsignedInteger('penerbits_id');
-            $table->unsignedInteger('categories_id');
+            $table->integer('penulis_id');
+            $table->integer('penerbits_id');
+            $table->integer('categories_id');
             $table->integer('tahun_terbit');
             $table->string('bahasa');
             $table->integer('halaman');
             $table->text('deskripsi');
             $table->string('pdf');
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

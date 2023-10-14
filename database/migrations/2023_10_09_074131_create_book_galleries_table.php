@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('book_galleries', function (Blueprint $table) {
             $table->id();
             $table->binary('foto');
-            $table->unsignedInteger('books_id');
+            $table->Integer('books_id');
             $table->timestamps();
         });
     }

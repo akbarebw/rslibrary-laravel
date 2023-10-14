@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\BukuController as AdminBukuController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PenerbitController as AdminPenerbitController;
 use App\Http\Controllers\Admin\PenulisController as AdminPenulisController;
@@ -65,6 +67,7 @@ Route::prefix('admin')
         Route::resource('penulis', AdminPenulisController::class);
         Route::resource('penerbit', AdminPenerbitController::class);
         Route::resource('user', UserController::class);
+        Route::resource('book', BookController::class);
 
     });
 

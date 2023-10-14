@@ -71,7 +71,7 @@ class CategoryController extends Controller
        
         $data = $request->all();
 
-        $data['slug'] = Str::slug($request->nama_penerbit);
+        $data['slug'] = Str::slug($request->nama);
         $data['foto'] = $request->file('foto')->store('assets/category', 'public');
       
         category::create($data);

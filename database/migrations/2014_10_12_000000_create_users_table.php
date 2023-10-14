@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->string('jenis_kelamin')->nullable();
-            $table->unsignedInteger('regencies_id')->nullable();
-            $table->unsignedInteger('provinces_id')->nullable();
+            $table->Integer('regencies_id')->nullable();
+            $table->Integer('provinces_id')->nullable();
             $table->string('country')->nullable();
             $table->string('role')->default('user');
             $table->softDeletes();
