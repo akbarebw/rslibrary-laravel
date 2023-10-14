@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookGallery extends Model
 {
-    use HasFactory;
+    
+ protected $fillable = [
+        'foto', 'books_id'
+    ];
+
+    protected $hidden = [
+
+    ];
+
+    public function book(){
+        return $this->belongsTo(Book::class, 'books_id', 'id');
+    }
+
 }

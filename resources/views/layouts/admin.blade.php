@@ -28,7 +28,9 @@
                     <a href="{{{ route('admin-dashboard') }}}"
                         class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }}">Dashboard</a>
                     <a href="{{ route('book.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/book*') ? 'active' : '' }}">Buku</a>
+                        class="list-group-item list-group-item-action {{ request()->is('admin/book') ? 'active' : '' }}">Buku</a>
+                    <a href="{{ route('book-gallery.index') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/book-gallery*') ? 'active' : '' }}">Gallery</a>
                     <a href="{{ route('user.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }}">User</a>
                     <a href="{{ route('penulis.index') }}"

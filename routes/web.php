@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\BookGalleryController;
 use App\Http\Controllers\Admin\BukuController as AdminBukuController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PenerbitController as AdminPenerbitController;
@@ -68,6 +69,7 @@ Route::prefix('admin')
         Route::resource('penerbit', AdminPenerbitController::class);
         Route::resource('user', UserController::class);
         Route::resource('book', BookController::class);
+        Route::resource('book-gallery', BookGalleryController::class);
 
     });
 
