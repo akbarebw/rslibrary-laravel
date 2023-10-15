@@ -36,7 +36,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/buku', [BukuController::class, 'index'])->name('buku');
+Route::get('/category', [BukuController::class, 'index'])->name('category');
+Route::get('/category/{id}', [BukuController::class, 'detail'])->name('category-detail');
 Route::get('/penulis', [PenulisController::class, 'index'])->name('penulis');
 Route::get('/penerbit', [PenerbitController::class, 'index'])->name('penerbit');
 Route::get('/details/{id}', [DetailController::class, 'index'])->name('detail');
