@@ -23,7 +23,7 @@ class BookGalleryRequest extends FormRequest
     {
         return [
             'books_id' => 'required|exists:books,id',
-            'foto' => 'required|image',
+            'foto' => 'sometimes|image',
         ];
     }
 }

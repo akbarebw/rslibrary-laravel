@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-perpus fixed-top navbar-fixed-top" data-aos="fade-down">
     <div class="container">
         <a href="{{ route('home') }}" class="navbar-brand">
-            <img src="/images/logo.svg" alt="logo" />
+            <img src="{{ asset('images/logo.svg') }}" alt="logo" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
             <span class="navbar-toggler-icon"></span>
@@ -46,7 +46,8 @@
                 <li class="nav-item dropdown">
                     <a href="" class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown">
                         Hi, {{ Auth::user()->nama }}
-                        <img src="images/user_pc.png" alt="profile" class="rounded-circle ml-2 profile-picture">
+                        <img src="{{ asset('images/user_pc.png') }}" alt="profile"
+                            class="rounded-circle ml-2 profile-picture">
                     </a>
                     <div class="dropdown-menu">
                         <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>

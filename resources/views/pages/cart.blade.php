@@ -24,67 +24,61 @@ perpustakaan success page
         <div class="container">
             <div class="row" data-aos="fade-up" data-aos-delay="100">
                 <div class="col-12 table-responsive">
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Tampilkan pesan berhasil -->
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     <table class="table table-borderless table-cart" aria-describedby="Cart">
                         <thead>
                             <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">book &amp; author</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Kategori</th>
                                 <th scope="col">Menu</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $totalPrice = 0 @endphp
+                            @foreach ($carts as $cart)
                             <tr>
                                 <td style="width: 25%;">
-                                    <img src="/images/product-cart-1.jpg" alt="" class="cart-image" />
+                                    @if($cart->book->galleries)
+                                    <img src="{{ Storage::url($cart->book->galleries->first()->foto) }}" alt=""
+                                        class="cart-image" />
+                                    @endif
                                 </td>
                                 <td style="width: 35%;">
-                                    <div class="product-title">best self</div>
-                                    <div class="product-subtitle">by Dr. pilip john</div>
+                                    <div class="product-title">{{ $cart->book->judul }}</div>
+                                    <div class="product-subtitle">by {{ $cart->book->penulis->nama_penulis }}</div>
                                 </td>
                                 <td style="width: 35%;">
-                                    <div class="product-title">Tersedia</div>
+                                    <div class="product-title">{{ $cart->book->category->nama }}</div>
                                 </td>
                                 <td style="width: 20%;">
-                                    <a href="#" class="btn btn-remove-cart">
-                                        Remove
-                                    </a>
+                                    <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-remove-cart" type="submit">
+                                            Remove
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                            <tr>
-                                <td style="width: 25%;">
-                                    <img src="/images/product-cart-1.jpg" alt="" class="cart-image" />
-                                </td>
-                                <td style="width: 25%;">
-                                    <div class="product-title">best self</div>
-                                    <div class="product-subtitle">by Dr. pilip john</div>
-                                </td>
-                                <td style="width: 25%;">
-                                    <div class="product-title">Tersedia</div>
-                                </td>
-                                <td style="width: 25%;">
-                                    <a href="#" class="btn btn-remove-cart">
-                                        Remove
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 25%;">
-                                    <img src="/images/product-cart-1.jpg" alt="" class="cart-image" />
-                                </td>
-                                <td style="width: 25%;">
-                                    <div class="product-title">best self</div>
-                                    <div class="product-subtitle">by Dr. pilip johnx</div>
-                                </td>
-                                <td style="width: 25%;">
-                                    <div class="product-title">Tersedia</div>
-                                </td>
-                                <td style="width: 25%;">
-                                    <a href="#" class="btn btn-remove-cart">
-                                        Remove
-                                    </a>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -100,38 +94,65 @@ perpustakaan success page
             <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="namaLengkap">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="namaLengkap" aria-describedby="emailHelp"
-                            name="namaLengkap" value="Akbar Bintang" />
+                        <label for="nama">Nama</label>
+                        @if($cart->user && $cart->user->nama)
+                        <input type="text" class="form-control border border-success" id="nama"
+                            aria-describedby="emailHelp" name="nama" value="{{ $cart->user->nama }}" readonly />
+                        @else
+                        <input type="text" class="form-control border border-warning" id="nama"
+                            aria-describedby="emailHelp" name="nama" placeholder="masukkan nama kamu" />
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class=" col-md-6">
                     <div class="form-group">
-                        <label for="email">email</label>
-                        <input type="text" class="form-control" id="email" aria-describedby="emailHelp" name="email"
-                            value="akbar@gmail.com" />
+                        <label for="email">Email</label>
+                        @if($cart->user && $cart->user->email)
+                        <input type="text" class="form-control border border-success" id="email"
+                            aria-describedby="emailHelp" name="email" value="{{ $cart->user->email }}" readonly />
+                        @else
+                        <input type="text" class="form-control border border-warning" id="email"
+                            aria-describedby="emailHelp" name="email" placeholder="masukkan email kamu" />
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="alamat">alamat</label>
-                        <input type="text" class="form-control" id="alamat" aria-describedby="alamatHelp" name="alamat"
-                            value="Jl. Soekarno Hatta" />
+                        @if($cart->user && $cart->user->alamat)
+                        <input type="text" class="form-control border border-success" id="alamat"
+                            aria-describedby="alamatHelp" name="alamat" value="{{ $cart->user->alamat }}" />
+                        @else
+                        <input type="text" class="form-control border border-warning" id="alamat"
+                            aria-describedby="alamatHelp" name="alamat" placeholder="masukkan alamat kamu" />
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class=" col-md-6">
                     <div class="form-group">
                         <label for="gender">Jenis Kelamin</label>
-                        <select name="gender" id="gender" class="form-control">
+                        @if($cart->user && $cart->user->jenis_kelamin)
+                        <input type="text" class="form-control border border-success" id="jenis_kelamin"
+                            aria-describedby="jeniskelaminHelp" name="jenis_kelamin"
+                            value="{{ $cart->user->jenis_kelamin }}" />
+                        @else
+                        <select name="jenis_kelamin" id="jenis_kelamin" class="form-control border border-warning">
                             <option value="pria">Pria</option>
                             <option value="wanita">Wanita</option>
                         </select>
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="mobile">Mobile</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile" value="+628 2020 11111" />
+                        <label for="mobile">No hp</label>
+                        @if($cart->user && $cart->user->jenis_kelamin)
+                        <input type="text" class="form-control border border-success" id="nomor_telp" name="nomor_telp"
+                            value="{{ $cart->user->nomor_telp }}" />
+                        @else
+                        <input type="text" class="form-control border border-warning" id="nomor_telp" name="nomor_telp"
+                            placeholder="Masukkan nomor telpon" />
+                        @endif
                     </div>
                 </div>
             </div>
@@ -154,7 +175,8 @@ perpustakaan success page
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="tanggal_pengembalian">Tanggal Pengembalian</label>
-                        <input type="date" name="tanggal_pengembalian" id="tanggal_pengembalian" class="form-control">
+                        <input type="date" name="tanggal_pengembalian" id="tanggal_pengembalian" class="form-control"
+                            readonly>
                     </div>
                 </div>
 
@@ -168,3 +190,29 @@ perpustakaan success page
     </section>
 </div>
 @endsection
+
+@push('addon-script')
+<script>
+    // Ambil elemen input tanggal peminjaman dan tanggal pengembalian
+        const tanggalPeminjamanInput = document.getElementById('tanggal_peminjaman');
+        const tanggalPengembalianInput = document.getElementById('tanggal_pengembalian');
+    
+        // Tambahkan event listener untuk input tanggal peminjaman
+        tanggalPeminjamanInput.addEventListener('change', function () {
+            // Ambil tanggal peminjaman
+            const tanggalPeminjaman = new Date(tanggalPeminjamanInput.value);
+            
+            // Tambahkan 3 hari ke tanggal peminjaman
+            tanggalPeminjaman.setDate(tanggalPeminjaman.getDate() + 3);
+            
+            // Format tanggal pengembalian menjadi YYYY-MM-DD
+            const tahun = tanggalPeminjaman.getFullYear();
+            const bulan = String(tanggalPeminjaman.getMonth() + 1).padStart(2, '0');
+            const tanggal = String(tanggalPeminjaman.getDate()).padStart(2, '0');
+            const tanggalPengembalian = `${tahun}-${bulan}-${tanggal}`;
+            
+            // Isi input tanggal pengembalian
+            tanggalPengembalianInput.value = tanggalPengembalian;
+        });
+</script>
+@endpush
