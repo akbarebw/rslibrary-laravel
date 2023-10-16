@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'nama' => 'required|string|max:50',
             'email' => 'required|email|unique:users',
-            'role' => 'nullable|string|in:admin,petugas, user',
+            'role' => 'nullable|string|in:admin,petugas,user',
         ];
     }
 }

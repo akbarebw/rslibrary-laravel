@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
 class RegisteredUserController extends Controller
 {
     /**
@@ -31,13 +30,13 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -51,5 +50,10 @@ class RegisteredUserController extends Controller
 
      public function success(){
         return view('auth.success');
+    }
+
+      public function check(Request $request)
+    {
+        return User::where('email', $request->email)->count() > 0 ? 'Unavailable' :"Available" ;
     }
 }
