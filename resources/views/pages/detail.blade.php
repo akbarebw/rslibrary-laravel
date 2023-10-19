@@ -128,7 +128,7 @@ perpustakaan detail page
                 </div>
             </div>
         </section>
-        <section class="perpus-review">
+        {{-- <section class="perpus-review">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8 mt-3 mb-3">
@@ -163,7 +163,7 @@ perpustakaan detail page
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
     </div>
 </div>
 @endsection

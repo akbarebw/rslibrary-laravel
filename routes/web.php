@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardBukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardPeminjamanController;
@@ -38,34 +39,42 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/category', [BukuController::class, 'index'])->name('category');
 Route::get('/category/{id}', [BukuController::class, 'detail'])->name('category-detail');
+
 Route::get('/penulis', [PenulisController::class, 'index'])->name('penulis');
 Route::get('/penerbit', [PenerbitController::class, 'index'])->name('penerbit');
+
 Route::get('/details/{id}', [DetailController::class, 'index'])->name('detail');
 Route::post('/details/{id}', [DetailController::class, 'add'])->name('detail-add');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
+Route::get('/dashboard/buku/add', [DashboardBukuController::class, 'create'])->name('dashboard-buku-create');
+
 Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisteredUserController::class, 'success'])->name('register-success');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
+    
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
 
-Route::get('/dashboard/buku', [DashboardBukuController::class, 'index'])->name('dashboard-buku');
-Route::get('/dashboard/buku/add', [DashboardBukuController::class, 'create'])->name('dashboard-buku-create');
-Route::get('/dashboard/buku/{id}', [DashboardBukuController::class, 'detail'])->name('dashboard-buku-detail');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard/peminjaman', [DashboardPeminjamanController::class, 'index'])->name('dashboard-peminjaman');
-Route::get('/dashboard/peminjaman/{id}', [DashboardPeminjamanController::class, 'detail'])->name('dashboard-peminjaman-detail');
+    Route::get('/dashboard/buku', [DashboardBukuController::class, 'index'])->name('dashboard-buku');
+    Route::get('/dashboard/buku/{id}', [DashboardBukuController::class, 'detail'])->name('dashboard-buku-detail');
+    Route::get('/dashboard/buku/baca/{id}', [DashboardBukuController::class, 'read'])->name('dashboard-buku-baca');
 
-Route::get('/dashboard/account', [DashboardSettingsController::class, 'index'])->name('dashboard-account');
+    Route::get('/dashboard/peminjaman', [DashboardPeminjamanController::class, 'index'])->name('dashboard-peminjaman');
+    Route::get('/dashboard/peminjaman/{id}', [DashboardPeminjamanController::class, 'detail'])->name('dashboard-peminjaman-detail');
 
-// Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
-
+    Route::get('/dashboard/account', [DashboardSettingsController::class, 'index'])->name('dashboard-account');
+    Route::post('/dashboard/update/{redirect}', [DashboardSettingsController::class, 'update'])->name('dashboard-account-redirect');
+});
 
 Route::prefix('admin')
+    ->middleware(['auth','admin'])
     ->group(function() {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
         Route::resource('category', CategoryController::class);

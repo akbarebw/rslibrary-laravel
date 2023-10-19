@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,19 +24,33 @@ class DetailController extends Controller
     }
      public function add(Request $request, $id)
     {
-         // Dapatkan jumlah item dalam keranjang saat ini untuk pengguna yang sedang login.
-    $currentCartCount = Cart::where('users_id', Auth::user()->id)->count();
+    $user = Auth::user();
 
-    // Batasi jumlah maksimal item dalam keranjang menjadi 5.
-    if ($currentCartCount >= 5) {
-        // Jika jumlah item dalam keranjang sudah mencapai 5, tampilkan pesan kesalahan.
-        return redirect()->route('cart')->with('error', 'Anda sudah mencapai jumlah maksimal item dalam keranjang (5 item).');
+    $currentTransaction = Transaction::where('users_id', $user->id)
+        ->where('status', 'dipinjam')
+        ->first();
+
+    $bookInCart = Cart::where('users_id', $user->id)
+            ->where('books_id', $id)
+            ->first();
+
+        if ($bookInCart) {
+            return redirect()->route('cart')->with('error', 'Buku ini sudah ada dalam keranjang Anda.');
+        }
+
+    if ($currentTransaction) {
+        $bookAlreadyBorrowed = TransactionDetail::where('transactions_id', $currentTransaction->id)
+            ->where('books_id', $id)
+            ->first();
+
+        if ($bookAlreadyBorrowed) {
+            return redirect()->route('cart')->with('error', 'Anda telah meminjam buku ini sebelumnya. Cek dashboard anda untuk detailnya.');
+        }
     }
 
-    // Jika belum mencapai 5, tambahkan item ke dalam keranjang seperti biasa.
     $data = [
         'books_id' => $id,
-        'users_id' => Auth::user()->id
+        'users_id' => $user->id
     ];
 
     Cart::create($data);

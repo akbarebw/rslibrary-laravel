@@ -52,9 +52,7 @@
             <button type="submit" class="btn btn-primary btn-block mt-4" :disabled="this.email_unavailable">
               Sign Up Now
             </button>
-            <button type="submit" class="btn btn-light btn-block mt-2">
-              Back to Sign In
-            </button>
+            <a href="{{ route('login') }}" class="btn btn-light btn-block mt-2">Back to Sign In</a>
           </form>
         </div>
       </div>

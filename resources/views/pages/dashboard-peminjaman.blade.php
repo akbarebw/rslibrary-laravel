@@ -19,11 +19,11 @@ Perpustakaan Dashboard Peminjaman Page
             <ul class="nav nav-pills" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="pinjam-tab" data-toggle="tab" href="#pinjam" role="tab"
-                        aria-controls="pinjam" aria-selected="true">Peminjaman</a>
+                        aria-controls="pinjam" aria-selected="true">Dipinjam</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="kembali-tab" data-toggle="tab" href="#kembali" role="tab"
-                        aria-controls="kembali" aria-selected="false">Dikembalikan</a>
+                        aria-controls="kembali" aria-selected="false">Selesai</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -43,59 +43,30 @@ Perpustakaan Dashboard Peminjaman Page
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($transaction_data as $transaction)
                                         <tr>
                                             <td>
-                                                <img src="/images/product-dashboard.jpg" alt="" />
+                                                <img src="{{ Storage::url($transaction->book->galleries->first()->foto) }}"
+                                                    alt="" width="70px" height="100px" style="object-fit: contain;" />
                                             </td>
                                             <td class="align-middle">
-                                                <div class="product-subtitle">best self</div>
-                                                <div class="product-title">by Dr. pilip john</div>
+                                                <div class="product-subtitle">{{ $transaction->book->judul }}</div>
+                                                <div class="product-title">by {{
+                                                    $transaction->book->penulis->nama_penulis
+                                                    }}</div>
                                             </td>
-                                            <td class="align-middle">akbar bintang</td>
-                                            <td class="align-middle">28 September, 2023</td>
-                                            <td class="align-middle">Dipinjam</td>
+                                            <td class="align-middle">{{ $transaction->transaction->user->nama }}</td>
+                                            <td class="align-middle">{{
+                                                Carbon\Carbon::parse($transaction->transaction->tanggal_pinjam)->format('d
+                                                F Y') }}</td>
+                                            <td class="align-middle">{{ $transaction->transaction->status }}</td>
                                             <td class="align-middle">
-                                                <a href="/dashboard-peminjaman-detail.html">
+                                                <a href="{{ route('dashboard-peminjaman-detail', $transaction->id) }}">
                                                     <img src="/images/dashboard-arrow-right.svg" alt="" />
                                                 </a>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td>
-                                                <img src="/images/product-dashboard.jpg" alt="" />
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="product-subtitle">best self</div>
-                                                <div class="product-title">by Dr. pilip john</div>
-                                            </td>
-                                            <td class="align-middle">akbar bintang</td>
-                                            <td class="align-middle">28 September, 2023</td>
-                                            <td class="align-middle">Dipinjam</td>
-                                            <td class="align-middle">
-                                                <a href="/dashboard-peminjaman-detail.html">
-                                                    <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                                </a>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <img src="/images/product-dashboard.jpg" alt="" />
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="product-subtitle">best self</div>
-                                                <div class="product-title">by Dr. pilip john</div>
-                                            </td>
-                                            <td class="align-middle">akbar bintang</td>
-                                            <td class="align-middle">28 September, 2023</td>
-                                            <td class="align-middle">Dipinjam</td>
-                                            <td class="align-middle">
-                                                <a href="/dashboard-peminjaman-detail.html">
-                                                    <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -119,24 +90,31 @@ Perpustakaan Dashboard Peminjaman Page
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($selesai as $transaction)
                                         <tr>
                                             <td>
-                                                <img src="/images/product-dashboard.jpg" alt="" />
+                                                <img src="{{ Storage::url($transaction->book->galleries->first()->foto) }}"
+                                                    alt="" width="70px" height="100px" style="object-fit: contain;" />
                                             </td>
                                             <td class="align-middle">
-                                                <div class="product-subtitle">best self</div>
-                                                <div class="product-title">by Dr. pilip john</div>
+                                                <div class="product-subtitle">{{ $transaction->book->judul }}</div>
+                                                <div class="product-title">by {{
+                                                    $transaction->book->penulis->nama_penulis
+                                                    }}</div>
                                             </td>
-                                            <td class="align-middle">akbar bintang</td>
-                                            <td class="align-middle">29 September, 2023</td>
-                                            <td class="align-middle">Kembali</td>
+                                            <td class="align-middle">{{ $transaction->transaction->user->nama }}</td>
                                             <td class="align-middle">
-                                                <a href="/dashboard-peminjaman-detail.html">
+                                                {{Carbon\Carbon::parse($transaction->transaction->tanggal_kembali)->format('d
+                                                F Y') }}
+                                            </td>
+                                            <td class="align-middle">{{ $transaction->transaction->status }}</td>
+                                            <td class="align-middle">
+                                                <a href="{{ route('dashboard-peminjaman-detail', $transaction->id) }}">
                                                     <img src="/images/dashboard-arrow-right.svg" alt="" />
                                                 </a>
                                             </td>
                                         </tr>
-
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

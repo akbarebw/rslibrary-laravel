@@ -12,17 +12,17 @@ perpustakaan success page
                 <div class="col-lg-6 text-center">
                     <img src="/images/success.png" alt="" class="mb-4" />
                     <h2>
-                        Peminjaman diproses!
+                        Peminjaman berhasil!
                     </h2>
                     <p>
-                        Silahkan tunggu konfirmasi email dari kami dan <br />
-                        kami akan menginformasikan lebih lanjut!
+                        Silahkan cek dashboard kamu, <br />
+                        untuk informasi lebih lanjut!
                     </p>
                     <div>
-                        <a class="btn btn-primary w-50 mt-4" href="/dashboard.html">
+                        <a class="btn btn-primary w-50 mt-4" href="{{ route('dashboard') }}">
                             Dashboard
                         </a>
-                        <a class="btn btn-signup w-50 mt-2" href="/index.html">
+                        <a class="btn btn-signup w-50 mt-2" href="{{ route('home') }}">
                             Beranda
                         </a>
                     </div>

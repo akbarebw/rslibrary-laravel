@@ -8,10 +8,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
+                <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
                     <a href="{{ route('home') }}" class="nav-link">Beranda</a>
                 </li>
-                <li class="nav-item {{ request()->is('buku') ? 'active' : '' }}">
+                <li class="nav-item {{ (request()->is('category*')) ? 'active' : '' }}">
                     <a href="{{ route('category') }}" class="nav-link">Buku</a>
                 </li>
                 <li class="nav-item">
@@ -39,9 +39,18 @@
             @auth
             <ul class="navbar-nav d-none d-lg-flex">
                 <li class="nav-item">
-                    <div class="a nav-link d-inline-block mt-2">
-                        <img src="/images/shopping.svg" alt="">
-                    </div>
+                    <a href="{{ route('cart') }}" class="nav-link d-inline-block mt-2">
+                        @php
+                        $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+                        @endphp
+                        @if($carts > 0)
+                        <img src="/images/cart-fill.svg" alt="" />
+                        <div class="card-badge">{{ $carts }}</div>
+                        @else
+                        <img src="/images/shopping.svg" alt="" />
+                        @endif
+                    </a>
+
                 </li>
                 <li class="nav-item dropdown">
                     <a href="" class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown">
@@ -66,8 +75,8 @@
 
             <!-- mobile menu -->
             <ul class="navbar-nav d-block d-lg-none">
-                <li class="nav-item"><a href="#" class="nav-link">Hi. Akbar</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Cart</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Hi. {{ Auth::user()->nama }}</a></li>
+                <li class="nav-item"><a href="{{ route('cart') }}" class="nav-link">Cart</a></li>
             </ul>
             @endauth
         </div>
