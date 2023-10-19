@@ -59,8 +59,13 @@
                             class="rounded-circle ml-2 profile-picture">
                     </a>
                     <div class="dropdown-menu">
+                        @if (auth()->check() && auth()->user()->role == 'admin')
+                        <a href="{{ route('admin-dashboard') }}" class="dropdown-item">Dashboard</a>
+                        <a href="{{ route('account.index') }}" class="dropdown-item">Settings</a>
+                        @else
                         <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
                         <a href="{{ route('dashboard-account') }}" class="dropdown-item">Settings</a>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

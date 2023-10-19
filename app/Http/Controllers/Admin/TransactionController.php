@@ -3,24 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
-use App\Http\Requests\Admin\CategoryRequest;
-use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
-class CategoryController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-         if (request()->ajax()) {
-            $query = Category::query();
+    {
+          if (request()->ajax()) {
+            $query = Transaction::with(['user']);
 
-            return Datatables::of($query)
+            return DataTables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
                         <div class="btn-group">
@@ -33,10 +30,10 @@ class CategoryController extends Controller
                                         Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                                    <a class="dropdown-item" href="' . route('category.edit', $item->id) . '">
+                                    <a class="dropdown-item" href="' . route('peminjaman.edit', $item->id) . '">
                                         Sunting
                                     </a>
-                                    <form action="' . route('category.destroy', $item->id) . '" method="POST">
+                                    <form action="' . route('peminjaman.destroy', $item->id) . '" method="POST">
                                         ' . method_field('delete') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger">
                                             Hapus
@@ -46,13 +43,11 @@ class CategoryController extends Controller
                             </div>
                     </div>';
                 })
-                ->editColumn('foto', function ($item) {
-                    return $item->foto ? '<img src="' . Storage::url($item->foto) . '" style="max-height: 40px;"/>' : '';
-                })
-                ->rawColumns(['action', 'foto'])
+                ->rawColumns(['action'])
                 ->make();
         }
-        return view ('pages.admin.category.index');
+
+        return view('pages.admin.transaction.index');
     }
 
     /**
@@ -60,23 +55,15 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.category.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-       
-        $data = $request->all();
-
-        $data['slug'] = Str::slug($request->nama);
-        $data['foto'] = $request->file('foto')->store('assets/category', 'public');
-      
-        category::create($data);
-
-        return redirect()->route('category.index');
+        //
     }
 
     /**
@@ -92,39 +79,25 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Category::findOrFail($id);
-
-        return view('pages.admin.category.edit',[
+        $item = Transaction::with(['user'])->findOrFail($id);
+        
+        return view('pages.admin.transaction.edit',[
             'item' => $item
         ]);
-    
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-        $item = Category::findOrFail($id);
-    $data = $request->all();
+         $data = $request->all();
 
-    $data['slug'] = Str::slug($request->nama);
+        $item = Transaction::findOrFail($id);
 
-    // Cek apakah ada file foto yang dikirim
-    if ($request->hasFile('foto')) {
-        // Hapus foto yang lama jika ada
-        if ($item->foto) {
-            Storage::disk('public')->delete($item->foto);
-        }
+        $item->update($data);
 
-        // Simpan foto yang baru
-        $data['foto'] = $request->file('foto')->store('assets/category', 'public');
-    }
-
-    $item->update($data);
-
-    return redirect()->route('category.index');
-    
+        return redirect()->route('peminjaman.index');
     }
 
     /**
@@ -132,9 +105,9 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = Category::findorFail($id);
+        $item = Transaction::findorFail($id);
         $item->delete();
 
-        return redirect()->route('category.index');
+        return redirect()->route('peminjaman.index');
     }
 }

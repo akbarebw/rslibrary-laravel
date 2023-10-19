@@ -2,7 +2,7 @@
 
 
 @section('title')
-Admin Edit User
+Admin Edit Book
 @endsection
 
 

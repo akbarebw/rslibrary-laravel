@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\BukuController as AdminBukuController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PenerbitController as AdminPenerbitController;
 use App\Http\Controllers\Admin\PenulisController as AdminPenulisController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -21,6 +23,12 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\PenulisController;
+use App\Http\Controllers\Petugas\BookController as PetugasBookController;
+use App\Http\Controllers\Petugas\CategoryController as PetugasCategoryController;
+use App\Http\Controllers\Petugas\PenerbitController as PetugasPenerbitController;
+use App\Http\Controllers\Petugas\PenulisController as PetugasPenulisController;
+use App\Http\Controllers\Petugas\PetugasDashboardController;
+use App\Http\Controllers\Petugas\TransactionController as PetugasTransactionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,7 +91,10 @@ Route::prefix('admin')
         Route::resource('user', UserController::class);
         Route::resource('book', BookController::class);
         Route::resource('book-gallery', BookGalleryController::class);
+        Route::resource('peminjaman', TransactionController::class);
+        Route::resource('account', SettingsController::class);
 
     });
+
 
 require __DIR__.'/auth.php';

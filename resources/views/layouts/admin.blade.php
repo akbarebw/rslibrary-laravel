@@ -39,10 +39,10 @@
                         class="list-group-item list-group-item-action {{ request()->is('admin/penerbit*') ? 'active' : '' }}">Penerbit</a>
                     <a href="{{ route('category.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/category*') ? 'active' : '' }}">Kategori</a>
-                    <a href="/dashboard-settings.html"
+                    <a href="{{ route('peminjaman.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">Peminjaman</a>
-                    <a href="/dashboard-account.html" class="list-group-item list-group-item-action" {{
-                        request()->is('admin/penulis*') ? 'active' : '' }}>My Account</a>
+                    <a href="{{ route('account.index') }}" class="list-group-item list-group-item-action" {{
+                        request()->is('admin/account*') ? 'active' : '' }}>My Account</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
