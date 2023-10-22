@@ -93,6 +93,8 @@ Route::prefix('admin')
         Route::resource('book-gallery', BookGalleryController::class);
         Route::resource('peminjaman', TransactionController::class);
         Route::resource('account', SettingsController::class);
+        Route::post('book/upload-gallery', [BookController::class, 'uploadGallery'])->name('book.uploadGallery');
+        Route::get('book/delete-gallery/{id}', [BookController::class, 'deleteGallery'])->name('book.deleteGallery');
 
     });
 

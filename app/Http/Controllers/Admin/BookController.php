@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BookRequest as AdminBookRequest;
 use App\Models\Book;
+use App\Models\BookGallery;
 use App\Models\Category;
 use App\Models\Penerbit;
 use App\Models\Penulis;
@@ -65,6 +66,8 @@ class BookController extends Controller
     return view('pages.admin.book.index');
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -83,6 +86,22 @@ class BookController extends Controller
     
 
     }
+     public function uploadGallery(Request $request){
+        $data = $request->all();
+
+        $data['foto'] = $request->file('foto')->store('assets/book', 'public');
+        BookGallery::create($data);
+
+        return redirect()->route('book.edit', $request->books_id);
+    }
+
+     public function deleteGallery(Request $request, $id)
+    {
+        $item = BookGallery::findorFail($id);
+        $item->delete();
+
+        return redirect()->route('book.edit', $item->books_id);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -93,7 +112,14 @@ class BookController extends Controller
         $data['slug'] = Str::slug($request->judul);
         $data['pdf'] = $request->file('pdf')->store('assets/book', 'public');
 
-         Book::create($data);
+         $book = Book::create($data);
+
+          $gallery = [
+            'books_id' => $book->id,
+            'foto' => $request->file('foto')->store('assets/book', 'public')
+            ];
+            BookGallery::create($gallery);
+
 
 
          return redirect()->route('book.index');
@@ -112,7 +138,7 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Book::with(['penulis', 'penerbit', 'category'])->findOrFail($id);
+        $item = Book::with(['penulis', 'penerbit', 'category', 'galleries'])->findOrFail($id);
         $penulis = Penulis::all();
         $categories = Category::all();
         $penerbits = Penerbit::all();
@@ -124,6 +150,8 @@ class BookController extends Controller
         ]);    
 
     }
+
+   
 
     /**
      * Update the specified resource in storage.

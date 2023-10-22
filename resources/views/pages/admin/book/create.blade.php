@@ -110,6 +110,16 @@ Admin Add Book
                                             <input type="file" class="form-control" name="pdf" required />
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="foto">thumbnails</label>
+                                            <input type="file" multiple class="form-control pt-1" id="foto"
+                                                aria-describedby="foto" name="foto" />
+                                            <small class="text-muted">
+                                                Kamu dapat memilih lebih dari satu file
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

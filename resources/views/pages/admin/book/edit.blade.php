@@ -126,7 +126,7 @@ Admin Edit Book
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col text-right">
+                                    <div class="col text-center">
                                         <button type="submit" class="btn btn-success px-5">
                                             Save Now
                                         </button>
@@ -134,6 +134,40 @@ Admin Edit Book
                                 </div>
                             </div>
                     </form>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                @foreach ($item->galleries as $gallery)
+                                <div class="col-md-4">
+                                    <div class="gallery-container">
+                                        <img src="{{ Storage::url($gallery->foto ?? '') }}" alt="" class="w-100" />
+                                        <a class="delete-gallery"
+                                            href="{{ route('book.deleteGallery', $gallery->id) }}">
+                                            <img src="/images/icon-delete.svg" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                                @endforeach
+                                <div class="col-12">
+                                    <form action="{{ route('book.uploadGallery') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" value="{{ $item->id }}" name="books_id">
+                                        <input type="file" name="foto" id="file" style="display: none;" multiple
+                                            onchange="form.submit()" />
+                                        <button type="button" class="btn btn-secondary btn-block mt-3"
+                                            onclick="thisFileUpload()">
+                                            Add Photo
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,6 +179,11 @@ Admin Edit Book
 @push('addon-script')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+<script>
+    function thisFileUpload() {
+      document.getElementById("file").click();
+    }
+</script>
 <script>
     ClassicEditor
             .create(document.querySelector('#editor'))
