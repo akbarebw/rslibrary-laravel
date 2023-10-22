@@ -136,10 +136,10 @@ perpustakaan success page
                         <div class="form-group">
                             <label for="gender">Jenis Kelamin</label>
                             @if(isset($cart) && $cart->user && $cart->user->jenis_kelamin)
-                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control border border-danger">
-                                <option value="pria" {{ $user->jenis_kelamin == 'pria' ? 'selected' : ''
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                <option value="pria" {{ $cart->user->jenis_kelamin == 'pria' ? 'selected' : ''
                                     }}>Pria</option>
-                                <option value="wanita" {{ $user->jenis_kelamin == 'wanita' ? 'selected'
+                                <option value="wanita" {{ $cart->user->jenis_kelamin == 'wanita' ? 'selected'
                                     : '' }}>Wanita</option>
                             </select>
                             @else

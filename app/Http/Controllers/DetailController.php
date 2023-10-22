@@ -26,6 +26,14 @@ class DetailController extends Controller
     {
     $user = Auth::user();
 
+     
+    $currentCartCount = Cart::where('users_id', $user->id)->count();
+
+
+    if ($currentCartCount >= 5) {
+            return redirect()->route('cart')->with('error', 'Anda sudah mencapai jumlah maksimal item dalam keranjang (5 item).');
+    }
+
     $currentTransaction = Transaction::where('users_id', $user->id)
         ->where('status', 'dipinjam')
         ->first();
