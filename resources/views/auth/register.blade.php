@@ -1,4 +1,4 @@
-@extends('layouts.auth');
+@extends('layouts.auth')
 
 @section('content')
 <div class="page-content page-auth" id="register">
@@ -108,7 +108,7 @@
       
       },
       data: {
-        name: "",
+        nama: "",
         email: "",
         email_unavailable: false
       },
